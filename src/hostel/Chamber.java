@@ -1,3 +1,5 @@
+package hostel;
+
 public class Chamber {
 
     protected int numero;
