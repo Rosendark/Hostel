@@ -38,7 +38,7 @@ public class Reservation {
             System.out.println("Impossible de savoir si la réservation " + numero + " est surclassée.");
             return false;
         }
-        return (categorie.getPoids() < chamber.getCategorie().getPoids());
+        return (categorie.comparePoids(chamber.getCategorie()) < 0);
     }
 
     /**
@@ -53,8 +53,18 @@ public class Reservation {
         return chamber.getPrix();
     }
 
-    public void setChamber(Chamber chamber) {
+    public void affecteChambre(Chamber chamber) {
+        if(chamber == null) {
+            System.out.println("Impossible d'affecter une chambre null à la chambre " + numero + "...");
+            return;
+        }
+
+        if(chamber.getCategorie().comparePoids(categorie) < 0) {
+            System.out.println("La chambre donnée ne répond pas aux besoins de la réservation " + numero + ".");
+            return;
+        }
         this.chamber = chamber;
+        statut = STATUT_RESERVE.ACCEPTEE;
     }
 
     public void dessafecteChambre() {

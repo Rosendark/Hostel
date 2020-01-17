@@ -22,7 +22,21 @@ public enum CATEGORIE {
         return prix;
     }
 
-    public int getPoids() {
-        return poids;
+    /**
+     * Permet de savoir quelle la catégorie à un poids supérieure l'autre
+     * @param category La catégorie qui servira de comparaison
+     * @return -1 si la catégorie à un poids inférieur à celui de la catégorie donnée en paramètre,
+     * 1 si le poids est supérieur et 0 en cas d'égalité
+     */
+    public int comparePoids(CATEGORIE category) {
+        int resultat = 0;
+        if(poids < category.poids)
+            resultat = -1;
+        else if(poids > category.poids)
+            resultat = 1;
+        else //Egalité
+            resultat = 0;
+        System.out.println("Comparaison du poids " + this + " et de " + category + ": " + resultat + ".");
+        return resultat;
     }
 }
