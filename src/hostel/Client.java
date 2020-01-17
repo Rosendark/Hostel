@@ -8,7 +8,7 @@ public class Client {
     protected String email;
     protected ArrayList<Reservation> reservations;
 
-    public Client(String nom, String email, ArrayList<Reservation> reservations) {
+    public Client(String nom, String email) {
         this.nom = nom;
         this.email = email;
         this.reservations = new ArrayList<Reservation>();
@@ -28,6 +28,14 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Permet d'ajouter une nouvelle réservation à la liste
+     * @param nouvelleReservation Reservation oà ajouter (créée dans l'objet Hostel)
+     */
+    public void addReservation(Reservation nouvelleReservation) {
+        reservations.add(nouvelleReservation);
     }
 
     public ArrayList<Reservation> getReservations() {

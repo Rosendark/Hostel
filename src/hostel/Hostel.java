@@ -14,6 +14,11 @@ public class Hostel {
         this.reservations = reservations;
     }
 
+    public void addChamber(int capacite, CATEGORIE categorie) {
+        int indexNouvelleChambre = chambers.size() + 1;
+        chambers.add(new Chamber(indexNouvelleChambre, capacite, categorie));
+    }
+
     public ArrayList<Chamber> getChambers() {
         return chambers;
     }
@@ -22,12 +27,55 @@ public class Hostel {
         this.chambers = chambers;
     }
 
+    /**
+     * Permet d'ajouter un client (possible uniquement à l'intérieur de cette classe lors de l'ajout d'une
+     * réservation par un email inconnu
+     * @param nom Le nom du client
+     * @param email L'adresse email (qui sert d'identifiant)
+     * @return Le client créé
+     */
+    private Client addClient(String nom, String email) {
+        Client nouveauClient = new Client(nom, email);
+        clients.add(nouveauClient);
+        return nouveauClient;
+    }
+
     public ArrayList<Client> getClients() {
         return clients;
     }
 
     public void setClients(ArrayList<Client> clients) {
         this.clients = clients;
+    }
+
+    public void addReservation(int jourArrivee, int moisArrivee, int anneeArrivee,
+                               int jourDepart, int moisDepart, int anneeDepart, int nbPersonnes,
+                               boolean aEnfant, CATEGORIE categorie, String emailReserveur, String nomReserveur) {
+        //Première étape, créer la réservation et l'ajouter à l'Hôtel
+        int indexNouvelHotel = reservations.size() + 1;
+        Reservation nouvelleReservation = new Reservation(indexNouvelHotel, jourArrivee, moisArrivee, anneeArrivee,
+                jourDepart, moisDepart, anneeDepart, nbPersonnes, aEnfant, categorie);
+        reservations.add(nouvelleReservation);
+
+        /*Deuxième étape, chercher le client avec l'adresse mail donnée, le créer si on ne le trouve pas,
+        dans les deux cas: lui affecter la réservation */
+        Client clientReserveur = getClientSelonMail(emailReserveur);
+        if(clientReserveur == null)
+            clientReserveur = addClient(nomReserveur, emailReserveur);
+        clientReserveur.addReservation(nouvelleReservation);
+    }
+
+    /**
+     * Permet d'obtenir un client selon son adresse email
+     * @param emailRecherche Le mail recherché
+     * @return Le client obtenu ou null si il n'existe pas de client avec l'adresse donnée
+     */
+    private Client getClientSelonMail(String emailRecherche) {
+        for(Client c: clients) {
+            if(c.getEmail().equals(emailRecherche))
+                return c;
+        }
+        return null;
     }
 
     public ArrayList<Reservation> getReservations() {
