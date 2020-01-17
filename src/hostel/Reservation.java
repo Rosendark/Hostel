@@ -10,10 +10,11 @@ public class Reservation {
     private boolean aEnfant;
     private Chamber chamber;
 
-    public Reservation(int numero, Date dateArrivee, Date dateDepart, int nbPersonnes, boolean aEnfant) {
+    public Reservation(int numero, int jourArrivee, int moisArrivee, int anneeArrivee,
+                       int jourDepart, int moisDepart, int anneeDepart, int nbPersonnes, boolean aEnfant) {
         this.numero = numero;
-        this.dateArrivee = dateArrivee;
-        this.dateDepart = dateDepart;
+        this.dateArrivee = dateCreation.createDate(jourArrivee, moisArrivee, anneeArrivee);
+        this.dateDepart = dateCreation.createDate(jourDepart, moisDepart, anneeDepart);
         this.nbPersonnes = nbPersonnes;
         chamber = null;
     }
