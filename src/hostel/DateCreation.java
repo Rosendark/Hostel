@@ -3,7 +3,7 @@ package hostel;
 import java.util.Calendar;
 import java.util.Date;
 
-public class dateCreation {
+public class DateCreation {
     public static Date createDate(int jour, int mois, int annee) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, jour);

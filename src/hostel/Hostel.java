@@ -1,6 +1,8 @@
 package hostel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Hostel {
 
@@ -64,6 +66,9 @@ public class Hostel {
     public void addReservation(int jourArrivee, int moisArrivee, int anneeArrivee,
                                int jourDepart, int moisDepart, int anneeDepart, int nbPersonnes,
                                boolean aEnfant, CATEGORIE categorie, String emailReserveur, String nomReserveur) {
+        //Todo: Vérifier les dates d'arrivée et de départ et annuler la création de la réservation si besoin
+
+
         //Première étape, créer la réservation et l'ajouter à l'Hôtel
         int indexNouvelHotel = reservations.size() + 1;
         Reservation nouvelleReservation = new Reservation(indexNouvelHotel, jourArrivee, moisArrivee, anneeArrivee,
@@ -97,5 +102,70 @@ public class Hostel {
 
     public void setReservations(ArrayList<Reservation> reservations) {
         this.reservations = reservations;
+    }
+
+    public void traiteToutesReservations() {
+        //On se base sur le moment de l'exécution de cette méthode
+        Date dateDebutTraitement = new Date();
+        for(Reservation r: reservations) {
+            traiteUneReservation(r, dateDebutTraitement);
+        }
+    }
+
+    public void traiteUneReservation(Reservation reservation, Date dateLimite) {
+        //On ne traite qu'une seule fois chaque réservation (le déclassement sera géré dans une autre méthode)
+        //Et tant pis si on essaie de la traiter après la date de départ
+        if(reservation.getStatut() != STATUT_RESERVE.EN_ATTENTE) {
+            System.out.println("La réservation " + reservation.getNumero() + " n'est pas en attente.");
+            return;
+        }
+        if(reservation.getDateDepart().before(dateLimite)) {
+            System.out.println("La fin de la réservation est avant la date limite.");
+            return;
+        }
+
+        ArrayList<Chamber> chambresDisponibles = getChambresNonReservees(dateLimite);
+        //On parcourt les chambres pour savoir laquelle utiliser
+        Chamber chamberReservation = getChambrePourReservation(chambresDisponibles);
+        if(!reservation.affecteChambre(chamberReservation))
+            System.out.println("Erreur réservation avec la chambre " + chamberReservation);
+    }
+
+    private Chamber getChambrePourReservation(ArrayList<Chamber> chambresDisponibles) {
+        //Todo: à faire
+        Chamber chambreObtenue = null;
+        for(Chamber ch: chambresDisponibles) {
+
+        }
+
+        return chambreObtenue;
+    }
+
+    public ArrayList<Chamber> getChambresNonReservees(Date dateLimite) {
+        //On récupère la liste des chambres réservées et on clone celle de l'Hostel
+        ArrayList<Chamber> chambresReservees = getChambresReservees(dateLimite);
+        ArrayList<Chamber> chambresNonReservee = new ArrayList<Chamber>();
+        chambresNonReservee.addAll(chambers);
+
+        //On retire ensuite toutes les chambres réservées au clone
+        chambresNonReservee.removeAll(chambresReservees);
+        return chambresNonReservee;
+    }
+
+    /**
+     * Permet de récupérer la liste des chambres qui sont déjà en cours de réservation
+     * @param dateLimite Date limite de récupération de chambres (on ne fait pas de récupération sur les
+     * réservations qui sont APRES cette date)
+     * @return La liste des chambres reservees
+     */
+    private ArrayList<Chamber> getChambresReservees(Date dateLimite) {
+        ArrayList<Chamber> chambresReservees = new ArrayList<Chamber>();
+        Chamber chambreActu = null;
+        for(Reservation r: reservations) {
+            chambreActu = r.getChamber();
+            if(r.getDateDepart().before(dateLimite) && chambreActu != null)
+                chambresReservees.add(r.getChamber());
+        }
+        return chambresReservees;
     }
 }

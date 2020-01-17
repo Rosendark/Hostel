@@ -26,15 +26,16 @@ public class Reservation {
                 "\n       aEnfant=" + aEnfant +
                 "\n       categorie=" + categorie +
                 "\n       statut=" + statut +
-                "\n       chamber=" + numeroChamber;
+                "\n       chamber=" + numeroChamber +
+                "\n       prix=" + getPrix();
     }
 
     public Reservation(int numero, int jourArrivee, int moisArrivee, int anneeArrivee,
                        int jourDepart, int moisDepart, int anneeDepart, int nbPersonnes,
                        boolean aEnfant, CATEGORIE categorie) {
         this.numero = numero;
-        this.dateArrivee = dateCreation.createDate(jourArrivee, moisArrivee, anneeArrivee);
-        this.dateDepart = dateCreation.createDate(jourDepart, moisDepart, anneeDepart);
+        this.dateArrivee = DateCreation.createDate(jourArrivee, moisArrivee, anneeArrivee);
+        this.dateDepart = DateCreation.createDate(jourDepart, moisDepart, anneeDepart);
         this.nbPersonnes = nbPersonnes;
         this.aEnfant = aEnfant;
         this.categorie = categorie;
@@ -69,41 +70,54 @@ public class Reservation {
         return chamber.getPrix();
     }
 
-    public void affecteChambre(Chamber chamber) {
+    public boolean affecteChambre(Chamber chamber) {
         if(chamber == null) {
             System.out.println("Impossible d'affecter une chambre null à la chambre " + numero + "...");
-            return;
+            return false;
         }
 
         if(chamber.getCategorie().comparePoids(categorie) < 0) {
             System.out.println("La chambre donnée ne répond pas aux besoins de la réservation " + numero + ".");
-            return;
+            return false;
         }
         this.chamber = chamber;
         statut = STATUT_RESERVE.ACCEPTEE;
+        return true;
     }
 
     public void dessafecteChambre() {
         chamber = null;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setDateArrivee(Date dateArrivee) {
-        this.dateArrivee = dateArrivee;
+    public Date getDateArrivee() {
+        return dateArrivee;
     }
 
-    public void setDateDepart(Date dateDepart) {
-        this.dateDepart = dateDepart;
+    public Date getDateDepart() {
+        return dateDepart;
     }
 
-    public void setNbPersonnes(int nbPersonnes) {
-        this.nbPersonnes = nbPersonnes;
+    public int getNbPersonnes() {
+        return nbPersonnes;
     }
 
-    public void setaEnfant(boolean aEnfant) {
-        this.aEnfant = aEnfant;
+    public boolean isaEnfant() {
+        return aEnfant;
+    }
+
+    public CATEGORIE getCategorie() {
+        return categorie;
+    }
+
+    public STATUT_RESERVE getStatut() {
+        return statut;
+    }
+
+    public Chamber getChamber() {
+        return chamber;
     }
 }

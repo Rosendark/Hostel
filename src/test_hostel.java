@@ -21,21 +21,21 @@ public class test_hostel {
            email 3 à les réservations 6
          */
 
-        hostel.addReservation(22, 12, 1997, 23, 12, 1997,
+        hostel.addReservation(22, 12, 1997, 23, 12, 2099,
                 3, false, CATEGORIE.CONFORT, email1, "Mister J");
         //Devra être annulé ou modifié car la date de d'arrivée est après celle de départ
-        hostel.addReservation(13, 5, 2011, 12, 5, 2011,
+        hostel.addReservation(13, 5, 2099, 12, 5, 2099,
                 3, false, CATEGORIE.CONFORT, email1, "Mister L");
 
-        hostel.addReservation(12, 2, 2013, 9, 6, 2014,
+        hostel.addReservation(12, 2, 2099, 9, 6, 2100,
                 5, true, CATEGORIE.ECO, email2, "Miles Prower");
-        hostel.addReservation(12, 2, 2013, 9, 6, 2014,
+        hostel.addReservation(12, 2, 2013, 9, 6, 2099,
                 5, false, CATEGORIE.CONFORT_PLUS, email2, "Tails");
 
-        hostel.addReservation(13, 5, 2011, 14, 5, 2011,
+        hostel.addReservation(13, 5, 2011, 14, 5, 2099,
                 3, false, CATEGORIE.CONFORT, email1, "LJ");
 
-        hostel.addReservation(2, 5, 2019, 5, 5, 2019,
+        hostel.addReservation(2, 5, 2019, 5, 5, 2099,
                 2, false, CATEGORIE.CONFORT, email3, "Noto");
 
         hostel.addReservation(26, 2, 2020, 29, 7, 2020,
