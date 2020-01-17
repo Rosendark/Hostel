@@ -8,6 +8,12 @@ public class Hostel {
     protected ArrayList<Client> clients;
     protected ArrayList<Reservation> reservations;
 
+    public Hostel() {
+        chambers = new ArrayList<Chamber>();
+        clients = new ArrayList<Client>();
+        reservations = new ArrayList<Reservation>();
+    }
+
     public Hostel(ArrayList<Chamber> chambers, ArrayList<Client> clients, ArrayList<Reservation> reservations) {
         this.chambers = chambers;
         this.clients = clients;
@@ -25,6 +31,13 @@ public class Hostel {
 
     public void setChambers(ArrayList<Chamber> chambers) {
         this.chambers = chambers;
+    }
+
+    public void printListeClient() {
+        System.out.println("Liste des clients de l'hostel: ");
+        for(Client c: clients) {
+            System.out.println(c);
+        }
     }
 
     /**

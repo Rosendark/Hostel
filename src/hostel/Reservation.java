@@ -13,6 +13,22 @@ public class Reservation {
     private STATUT_RESERVE statut;
     private Chamber chamber;
 
+    @Override
+    public String toString() {
+        String numeroChamber = "Aucune";
+        if(chamber != null)
+            numeroChamber = "" + chamber.numero;
+        return "    Reservation: " +
+                "\n       numero=" + numero +
+                "\n       dateArrivee=" + dateArrivee +
+                "\n       dateDepart=" + dateDepart +
+                "\n       nbPersonnes=" + nbPersonnes +
+                "\n       aEnfant=" + aEnfant +
+                "\n       categorie=" + categorie +
+                "\n       statut=" + statut +
+                "\n       chamber=" + numeroChamber;
+    }
+
     public Reservation(int numero, int jourArrivee, int moisArrivee, int anneeArrivee,
                        int jourDepart, int moisDepart, int anneeDepart, int nbPersonnes,
                        boolean aEnfant, CATEGORIE categorie) {

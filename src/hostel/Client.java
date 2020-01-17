@@ -8,6 +8,22 @@ public class Client {
     protected String email;
     protected ArrayList<Reservation> reservations;
 
+    @Override
+    public String toString() {
+        return "Client: " +
+                "\n  nom='" + nom + '\'' +
+                "\n  email='" + email + '\'' +
+                "\n  listeReservation: \n" + getListeReservation();
+    }
+
+    public String getListeReservation() {
+        String texteListeReservation = "";
+        for(Reservation r: reservations) {
+            texteListeReservation += r + "\n";
+        }
+        return texteListeReservation;
+    }
+
     public Client(String nom, String email) {
         this.nom = nom;
         this.email = email;
